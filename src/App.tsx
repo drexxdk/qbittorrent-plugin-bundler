@@ -14,7 +14,7 @@ import { bundleMeta } from "./generated/bundle-meta";
 
 const repoUrl =
   import.meta.env.VITE_REPO_URL ??
-  "https://github.com/drexxdk/qbittorrent-plugin-bundle";
+  "https://github.com/drexxdk/qbittorrent-search-plugin-bundle";
 
 function formatDate(isoDate: string) {
   return new Intl.DateTimeFormat("en-GB", {
@@ -44,7 +44,7 @@ function App() {
             <div className="space-y-6">
               <div className="space-y-4">
                 <p className="font-['Space_Grotesk',sans-serif] text-4xl font-bold tracking-tight text-stone-950 sm:text-5xl">
-                  Download the latest qBittorrent search plugin bundle.
+                  qBittorrent search plugin bundle
                 </p>
                 <p className="max-w-2xl text-lg leading-7 text-stone-700">
                   One zip file with the latest reachable plugins from the
