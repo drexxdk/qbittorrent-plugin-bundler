@@ -11,6 +11,12 @@ const outputZipPath = path.join(
   rootDir,
   "public",
   "downloads",
+  "qbittorrent-search-plugin-bundle-latest.zip",
+);
+const legacyOutputZipPath = path.join(
+  rootDir,
+  "public",
+  "downloads",
   "qbittorrent-search-plugins-latest.zip",
 );
 const outputMetaPath = path.join(rootDir, "src", "generated", "bundle-meta.ts");
@@ -237,6 +243,7 @@ async function main() {
   await mkdir(path.dirname(outputZipPath), { recursive: true });
   await mkdir(path.dirname(outputMetaPath), { recursive: true });
   await mkdir(path.dirname(outputPublicMetaPath), { recursive: true });
+  await rm(legacyOutputZipPath, { force: true });
   await writeFile(outputZipPath, zipBuffer);
   await writeFile(outputMetaPath, renderMetaModule(meta));
   await writeFile(outputPublicMetaPath, `${JSON.stringify(meta, null, 2)}\n`);
