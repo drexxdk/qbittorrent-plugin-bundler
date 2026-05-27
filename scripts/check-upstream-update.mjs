@@ -3,6 +3,7 @@ import { fetchWikiSnapshot } from "./wiki-source.mjs";
 
 const liveMetaUrl = process.env.LIVE_META_URL;
 const forceDeploy = process.env.FORCE_DEPLOY === "true";
+const forceReason = process.env.FORCE_REASON || "forced";
 
 function formatDate(value) {
   return new Intl.DateTimeFormat("en-GB", {
@@ -66,7 +67,7 @@ async function main() {
   const shouldDeploy =
     forceDeploy || !liveHash || liveHash !== currentWiki.sourceWikiContentHash;
   const reason = forceDeploy
-    ? "forced"
+    ? forceReason
     : !liveHash
       ? "missing-live-metadata"
       : shouldDeploy
@@ -81,7 +82,11 @@ async function main() {
   ]);
 
   const resultLine = shouldDeploy
-    ? "Build and deploy will run."
+    ? reason === "push-update"
+      ? "A push to the deployment branch triggered a site rebuild and deploy."
+      : reason === "manual-force"
+        ? "A manual force run triggered a site rebuild and deploy."
+        : "Build and deploy will run."
     : "No upstream wiki change detected. Build and deploy will be skipped.";
 
   await writeSummary([

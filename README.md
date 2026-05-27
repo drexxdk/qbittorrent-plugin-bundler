@@ -20,12 +20,12 @@ Static Vite + React site for GitHub Pages that publishes a zip bundle of the lat
 
 ## GitHub Pages workflow
 
-The workflow in `.github/workflows/deploy.yml` can run on demand and checks the upstream wiki every day at 06:00 UTC.
+The workflow in `.github/workflows/deploy.yml` runs automatically on pushes to `main`, can run on demand, and also checks the upstream wiki every day at 06:00 UTC.
 
-- If the upstream wiki content hash changed, it regenerates the bundle, builds the site, and deploys GitHub Pages.
+- A push to `main` rebuilds and deploys the site so GitHub Pages stays in sync with committed site changes.
+- If the scheduled or non-forced manual run sees that the upstream wiki content hash changed, it regenerates the bundle, builds the site, and deploys GitHub Pages.
 - If the wiki did not change, it skips the expensive steps and writes a summary explaining why nothing was published.
 - A manual run can force a rebuild with the `force` input.
-- A normal `git push` does not trigger this workflow because there is no `push` event configured.
 
 ### Running the workflow manually
 

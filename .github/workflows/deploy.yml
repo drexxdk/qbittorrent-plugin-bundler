@@ -1,6 +1,9 @@
 name: Build And Deploy
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       force:
@@ -38,7 +41,8 @@ jobs:
       - name: Check upstream wiki revision
         id: upstream
         env:
-          FORCE_DEPLOY: ${{ github.event.inputs.force == 'true' }}
+          FORCE_DEPLOY: ${{ github.event_name == 'push' || github.event.inputs.force == 'true' }}
+          FORCE_REASON: ${{ github.event_name == 'push' && 'push-update' || github.event.inputs.force == 'true' && 'manual-force' || '' }}
           LIVE_META_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/bundle-meta.json
         run: npm run check:upstream
 
