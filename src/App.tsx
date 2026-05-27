@@ -14,7 +14,7 @@ import { bundleMeta } from "./generated/bundle-meta";
 
 const repoUrl =
   import.meta.env.VITE_REPO_URL ??
-  "https://github.com/drexxdk/qbittorrent-plugin-bundler";
+  "https://github.com/drexxdk/qbittorrent-plugin-bundle";
 
 function formatDate(isoDate: string) {
   return new Intl.DateTimeFormat("en-GB", {
