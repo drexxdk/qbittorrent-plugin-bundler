@@ -51,15 +51,15 @@ function App() {
                   qBittorrent community wiki.
                 </p>
               </div>
-              <div className="flex flex-col items-center gap-3 sm:items-start">
+              <div className="flex flex-col items-center gap-3 lg:items-start">
                 <a
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-stone-950 px-6 py-3.5 text-base font-semibold text-white transition hover:bg-stone-800"
                   href={downloadHref}
                 >
                   <FaDownload className="text-lg" aria-hidden="true" />
-                  Download latest zip
+                  Download bundle
                 </a>
-                <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm font-medium text-stone-700 sm:justify-start">
+                <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm font-medium text-stone-700 lg:justify-start">
                   <a
                     className="inline-flex items-center gap-1.5 transition hover:text-stone-950"
                     href={repoUrl}
