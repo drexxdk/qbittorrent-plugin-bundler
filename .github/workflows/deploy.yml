@@ -2,8 +2,14 @@ name: Build And Deploy
 
 on:
   workflow_dispatch:
+    inputs:
+      force:
+        description: Force a rebuild and deployment even when the upstream wiki has not changed.
+        required: false
+        default: false
+        type: boolean
   schedule:
-    - cron: '0 6 * * 1'
+    - cron: "0 6 * * 1"
 
 permissions:
   contents: read
@@ -17,6 +23,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      should_deploy: ${{ steps.upstream.outputs.should_deploy }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,26 +35,39 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Check upstream wiki revision
+        id: upstream
+        env:
+          FORCE_DEPLOY: ${{ github.event.inputs.force == 'true' }}
+          LIVE_META_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/bundle-meta.json
+        run: npm run check:upstream
+
       - name: Install dependencies
+        if: steps.upstream.outputs.should_deploy == 'true'
         run: npm ci
 
       - name: Generate latest plugin bundle
+        if: steps.upstream.outputs.should_deploy == 'true'
         run: npm run generate:bundle
 
       - name: Build site
+        if: steps.upstream.outputs.should_deploy == 'true'
         run: npm run build
         env:
           VITE_REPO_URL: https://github.com/${{ github.repository }}
 
       - name: Setup Pages
+        if: steps.upstream.outputs.should_deploy == 'true'
         uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
+        if: steps.upstream.outputs.should_deploy == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
   deploy:
+    if: ${{ needs.build.outputs.should_deploy == 'true' }}
     needs: build
     runs-on: ubuntu-latest
     environment:

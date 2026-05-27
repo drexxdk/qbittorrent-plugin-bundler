@@ -1,4 +1,4 @@
-export const bundleMeta = {
+{
   "generatedAt": "2026-05-27T19:54:46.943Z",
   "sourceWikiUrl": "https://github.com/qbittorrent/search-plugins/wiki/Unofficial-search-plugins",
   "sourceWikiRawUrl": "https://raw.githubusercontent.com/wiki/qbittorrent/search-plugins/Unofficial-search-plugins.mediawiki",
@@ -1100,4 +1100,4 @@ export const bundleMeta = {
       "reason": "404 Not Found"
     }
   ]
-} as const
+}

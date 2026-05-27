@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "check:upstream": "node ./scripts/check-upstream-update.mjs",
     "generate:bundle": "node ./scripts/generate-bundle.mjs",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
